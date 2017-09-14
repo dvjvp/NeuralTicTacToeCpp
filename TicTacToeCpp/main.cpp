@@ -15,7 +15,6 @@ int main()
 
 	float sampleInputs[] = { 1.0f,1.0f,1.0f,1.0f };
 	size_t outputSize;
-	const float* output = network.Compute(sampleInputs, 4, outputSize);
 
 	for (size_t i = 0; i < network.layerCount; ++i)
 	{
@@ -30,6 +29,8 @@ int main()
 		}
 	}
 
+
+	const float* output = network.Compute(sampleInputs, 4, outputSize);
 	for (size_t i = 0; i < outputSize; i++)
 	{
 		std::cout << output[i];

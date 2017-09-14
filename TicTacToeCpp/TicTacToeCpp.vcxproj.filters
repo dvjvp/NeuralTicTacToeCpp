@@ -41,12 +41,6 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Neural\Layer.cpp">
-      <Filter>Source Files\Neural</Filter>
-    </ClCompile>
-    <ClCompile Include="Neural\NeuralNetwork.cpp">
-      <Filter>Source Files\Neural</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
