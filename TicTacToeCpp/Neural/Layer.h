@@ -63,7 +63,7 @@ namespace Neural
 	template<typename T>
 	void Layer<T>::ClearInputs()
 	{
-		memset(inputs, (T)0, thisLayerSize * sizeof(T));
+		memset(inputs, 0, thisLayerSize * sizeof(T));
 	}
 	template<typename T>
 	inline T Layer<T>::GetWeight(const size_t nodeInThisLayerIndex, const size_t nodeInNextLayerIndex) const

@@ -47,6 +47,7 @@ namespace Neural
 		{
 			throw std::exception("Invalid number of layers");
 		}
+		this->layerCount = layerCount;
 
 		//Create buffer for layers and initialize their internal neuron buffers
 		layers = new Layer<T>[layerCount];
@@ -82,8 +83,8 @@ namespace Neural
 
 		for (size_t layerIndex = 0; layerIndex < layerCount - 1; layerIndex++)
 		{
-			Layer& thisLayer = layers[layerIndex];
-			Layer& nextLayer = layers[layerIndex + 1];
+			Layer<T>& thisLayer = layers[layerIndex];
+			Layer<T>& nextLayer = layers[layerIndex + 1];
 
 			for (size_t nodeIndex = 0; nodeIndex < thisLayer.thisLayerSize; nodeIndex++)
 			{
@@ -100,7 +101,7 @@ namespace Neural
 			}
 		}
 
-		Layer& lastLayer = layers[layerCount - 1];
+		Layer<T>& lastLayer = layers[layerCount - 1];
 		outputsSize = lastLayer.thisLayerSize;
 		return lastLayer.inputs;
 	}
