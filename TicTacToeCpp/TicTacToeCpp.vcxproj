@@ -154,7 +154,7 @@
     <ClCompile Include="Neural\Layer.cpp" />
     <ClCompile Include="Neural\NeuralNetwork.cpp" />
     <ClCompile Include="stdafx.cpp" />
-    <ClCompile Include="TicTacToeCpp.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
