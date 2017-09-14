@@ -1,7 +1,6 @@
 #include "NeuralNetworkPlayer.h"
 #include "../Utility/Algorithms.h"
-#include <time.h>
-#include <cstdlib>
+#include "../Neural/NetworkHelpers.h"
 
 namespace TicTacToeGame
 {
@@ -13,22 +12,8 @@ namespace TicTacToeGame
 		network = new Neural::BasicNeuralNetwork(layerSizes, 3);
 
 		//randomize weights and tresholds
-		srand((size_t)time(0));
-		for (size_t i = 0; i < network->layerCount; ++i)
-		{
-			Neural::Layer<float>& thisLayer = network->layers[i];
-
-			//tresholds
-			for (size_t j = 0; j < thisLayer.thisLayerSize; j++)
-			{
-				thisLayer.tresholds[j] = Random(0.35f);
-			}
-			//weights
-			for (size_t j = 0; j < thisLayer.thisLayerSize*thisLayer.nextLayerSize; j++)
-			{
-				thisLayer.weights[j] = Random(1.0f);
-			}
-		}
+		Neural::HelperFunctions::RandomizeNeuralNetworkTresholds(network, 0.0f, 0.35f);
+		Neural::HelperFunctions::RandomizeNeuralNetworkWeights(network, 0.0f, 1.0f);
 	}
 
 	NeuralNetworkPlayer::NeuralNetworkPlayer(Neural::BasicNeuralNetwork * network)
@@ -85,11 +70,6 @@ namespace TicTacToeGame
 		if (field == Field::EMPTY) return 0.0f;
 		if (field == GetColor()) return 1.0f;
 		else return -1.0f;
-	}
-
-	inline float NeuralNetworkPlayer::Random(const float _max)
-	{
-		return ((float)rand() / (float)(RAND_MAX)) * _max;
 	}
 
 }

@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include <iostream>
+#include <time.h>
 #include "Neural/NeuralNetwork.h"
 #include "Game/TicTacToe.h"
 #include "Players/RandomPlayer.h"
@@ -12,6 +13,8 @@ using namespace TicTacToeGame;
 
 int main()
 {
+	srand((size_t)time(0));
+
 	IPlayer* player1 = new RandomPlayer();
 	IPlayer* player2 = new NeuralNetworkPlayer();
 
@@ -37,27 +40,6 @@ int main()
 	{
 		std::cout << ToChar((Field)result) << " won." << std::endl;
 	}
-
-	//float sampleInputs[] = { 1.0f,1.0f,1.0f,1.0f };
-	//size_t outputSize;
-	//for (size_t i = 0; i < network.layerCount; ++i)
-	//{
-	//	Neural::Layer<float>& thisLayer = network.layers[i];
-	//	for (size_t j = 0; j < thisLayer.thisLayerSize; j++)
-	//	{
-	//		thisLayer.tresholds[j] = 0.0f;
-	//	}
-	//	for (size_t j = 0; j < thisLayer.thisLayerSize*thisLayer.nextLayerSize; j++)
-	//	{
-	//		thisLayer.weights[j] = 1.0f;
-	//	}
-	//}
-	//const float* output = network.Compute(sampleInputs, 4, outputSize);
-	//for (size_t i = 0; i < outputSize; i++)
-	//{
-	//	std::cout << output[i];
-	//}
-
 
 	getchar();
     return EXIT_SUCCESS;

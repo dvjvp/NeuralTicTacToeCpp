@@ -72,6 +72,9 @@
     <ClInclude Include="Utility\Algorithms.h">
       <Filter>Header Files\Utility</Filter>
     </ClInclude>
+    <ClInclude Include="Neural\NetworkHelpers.h">
+      <Filter>Header Files\Neural</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

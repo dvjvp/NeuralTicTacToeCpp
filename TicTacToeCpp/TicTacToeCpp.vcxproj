@@ -155,6 +155,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Game\TicTacToe.h" />
     <ClInclude Include="Utility\Algorithms.h" />
+    <ClInclude Include="Neural\NetworkHelpers.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game\Board.cpp" />
