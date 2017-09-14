@@ -26,4 +26,9 @@ namespace Neural
 	{
 		memset(inputs, (T)0, thisLayerSize * sizeof(T));
 	}
+	template<typename T>
+	inline T Layer<T>::GetWeight(size_t nodeInThisLayerIndex, size_t nodeInNextLayerIndex)
+	{
+		return weights[(nodeInNextLayerIndex*nextLayerSize) + nodeInNextLayerIndex];
+	}
 }

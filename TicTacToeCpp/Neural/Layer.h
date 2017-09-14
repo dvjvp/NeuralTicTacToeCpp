@@ -3,13 +3,15 @@
 namespace Neural
 {
 	template<typename T>
-	class Layer<T>
+	class Layer
 	{
 	public:
-		Layer<T>(size_t thisLayerSize, size_t nextLayerSize);
+		Layer(size_t thisLayerSize, size_t nextLayerSize);
 		~Layer();
 
 		void ClearInputs();
+
+		inline T GetWeight(size_t nodeInThisLayerIndex, size_t nodeInNextLayerIndex);
 	public:
 		T* tresholds;
 		T* weights;
