@@ -16,6 +16,7 @@ namespace TicTacToeGame
 		float* GenerateInputs(const Board& currentBoard);
 		char ProcessOutputs(const float* outputs);
 		inline float FieldToFloat(const Field& field);
+		inline float Random(const float _max);
 	private:
 		Neural::BasicNeuralNetwork* network;
 	};

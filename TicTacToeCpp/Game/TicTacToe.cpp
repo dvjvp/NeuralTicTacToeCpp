@@ -1,5 +1,5 @@
 #include "TicTacToe.h"
-
+#include <iostream>
 
 namespace TicTacToeGame
 {
@@ -23,7 +23,8 @@ namespace TicTacToeGame
 
 	bool TicTacToe::IsValidMove(char position)
 	{
-		return board.data[position] == Field::EMPTY;
+		if (position >= Board::BOARD_SIZE) return false;
+		return (board.data[position] == Field::EMPTY);
 	}
 	void TicTacToe::MakeMove(char position)
 	{
@@ -36,6 +37,7 @@ namespace TicTacToeGame
 		if (!IsValidMove(move))
 		{
 			//returning wrong move equals auto-losing
+			std::cout << "Player tried to make an illegal move: " << (int)move << std::endl;
 			return GetCurrentPlayer()->color == Field::X ? MoveResult::O_WON : MoveResult::X_WON;
 		}
 		MakeMove(move);
