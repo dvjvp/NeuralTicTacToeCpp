@@ -17,6 +17,19 @@ int main()
 	size_t outputSize;
 	const float* output = network.Compute(sampleInputs, 4, outputSize);
 
+	for (size_t i = 0; i < network.layerCount; ++i)
+	{
+		Neural::Layer<float>& thisLayer = network.layers[i];
+		for (size_t j = 0; j < thisLayer.thisLayerSize; j++)
+		{
+			thisLayer.tresholds[j] = 0.0f;
+		}
+		for (size_t j = 0; j < thisLayer.thisLayerSize*thisLayer.nextLayerSize; j++)
+		{
+			thisLayer.weights[j] = 1.0f;
+		}
+	}
+
 	for (size_t i = 0; i < outputSize; i++)
 	{
 		std::cout << output[i];
