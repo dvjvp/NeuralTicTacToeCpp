@@ -38,7 +38,7 @@ namespace TicTacToeGame
 			//returning wrong move equals auto-losing
 			return GetCurrentPlayer()->color == Field::X ? MoveResult::O_WON : MoveResult::X_WON;
 		}
-
+		MakeMove(move);
 		return board.GetBoardStateResult();
 	}
 	void TicTacToe::SwitchTurns()
