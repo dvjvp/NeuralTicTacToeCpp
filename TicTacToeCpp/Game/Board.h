@@ -26,7 +26,7 @@ namespace TicTacToeGame
 		~Board();
 
 		void MakeMove(char fieldIndex, Field move);
-		Field GetSquare(char fieldIndex);
+		Field GetSquare(char fieldIndex) const;
 
 		MoveResult GetBoardStateResult();
 

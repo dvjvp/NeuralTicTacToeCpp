@@ -14,7 +14,7 @@ namespace TicTacToeGame
 
 	protected:
 		bool IsMoveValid(char move);
-		inline Field GetColor();
+		Field GetColor();
 
 	private:
 		friend class TicTacToe;

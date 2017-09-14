@@ -19,7 +19,7 @@ namespace TicTacToeGame
 		return currentGame->IsValidMove(move);
 	}
 
-	inline Field IPlayer::GetColor()
+	Field IPlayer::GetColor()
 	{
 		return color;
 	}

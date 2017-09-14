@@ -26,7 +26,7 @@ namespace TicTacToeGame
 			throw std::exception("Invalid argument in MakeMove");
 		}
 	}
-	Field Board::GetSquare(char fieldIndex)
+	Field Board::GetSquare(char fieldIndex) const
 	{
 		return data[fieldIndex];
 	}

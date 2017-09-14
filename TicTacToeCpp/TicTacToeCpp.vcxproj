@@ -147,16 +147,19 @@
   <ItemGroup>
     <ClInclude Include="Game\Board.h" />
     <ClInclude Include="Game\IPlayer.h" />
+    <ClInclude Include="Players\NeuralNetworkPlayer.h" />
     <ClInclude Include="Neural\Layer.h" />
     <ClInclude Include="Neural\NeuralNetwork.h" />
     <ClInclude Include="Players\RandomPlayer.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Game\TicTacToe.h" />
+    <ClInclude Include="Utility\Algorithms.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game\Board.cpp" />
     <ClCompile Include="Game\IPlayer.cpp" />
+    <ClCompile Include="Players\NeuralNetworkPlayer.cpp" />
     <ClCompile Include="Players\RandomPlayer.cpp" />
     <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="main.cpp" />

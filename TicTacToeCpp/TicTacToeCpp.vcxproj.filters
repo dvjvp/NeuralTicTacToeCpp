@@ -31,6 +31,12 @@
     <Filter Include="Source Files\Players">
       <UniqueIdentifier>{54a625cb-dd77-43a6-982c-1035a21eb36e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Utility">
+      <UniqueIdentifier>{d9a1fe0b-2227-42e3-8e58-00fb8ed880cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Utility">
+      <UniqueIdentifier>{7a0306b4-ad68-4843-ad1c-594c7299b204}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -60,6 +66,12 @@
     <ClInclude Include="Players\RandomPlayer.h">
       <Filter>Header Files\Players</Filter>
     </ClInclude>
+    <ClInclude Include="Players\NeuralNetworkPlayer.h">
+      <Filter>Header Files\Players</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\Algorithms.h">
+      <Filter>Header Files\Utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -78,6 +90,9 @@
       <Filter>Source Files\Game</Filter>
     </ClCompile>
     <ClCompile Include="Players\RandomPlayer.cpp">
+      <Filter>Source Files\Players</Filter>
+    </ClCompile>
+    <ClCompile Include="Players\NeuralNetworkPlayer.cpp">
       <Filter>Source Files\Players</Filter>
     </ClCompile>
   </ItemGroup>
