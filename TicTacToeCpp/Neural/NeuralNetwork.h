@@ -3,12 +3,20 @@
 namespace Neural
 {
 
-	class NeuralNetwork
+	template<typename T>
+	class NeuralNetwork<T>
 	{
 	public:
-		NeuralNetwork();
-		~NeuralNetwork();
+		NeuralNetwork<T>();
+		~NeuralNetwork<T>();
 	};
+
+
+
+
+
+	template<typename T>
+	using BasicNeuralNetwork = NeuralNetwork<float>;
 }
 
 

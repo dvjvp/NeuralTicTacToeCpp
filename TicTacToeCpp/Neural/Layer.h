@@ -2,11 +2,21 @@
 
 namespace Neural
 {
-	class Layer
+	template<typename T>
+	class Layer<T>
 	{
 	public:
-		Layer();
+		Layer<T>(size_t thisLayerSize, size_t nextLayerSize);
 		~Layer();
+
+		void ClearInputs();
+	public:
+		T* tresholds;
+		T* weights;
+		T* inputs;
+
+		size_t thisLayerSize;
+		size_t nextLayerSize;
 	};
 }
 
