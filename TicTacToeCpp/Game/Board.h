@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 
 namespace TicTacToeGame
 {
@@ -41,7 +42,11 @@ namespace TicTacToeGame
 			3 4 5
 			6 7 8
 		*/
+
 	};
+
+	std::ostream& operator<< (std::ostream& stream, const Board& board);
+	char ToChar(const Field& field);
 }
 
 

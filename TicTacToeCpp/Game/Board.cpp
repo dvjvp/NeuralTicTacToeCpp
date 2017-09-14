@@ -32,7 +32,7 @@ namespace TicTacToeGame
 	}
 	MoveResult Board::GetBoardStateResult()
 	{
-		//check horizontally
+		//check vertically
 		for (size_t i = 0; i < 3; i++)
 		{
 			if (data[i] == data[i + 3] && data[i] == data[i + 6])
@@ -41,7 +41,7 @@ namespace TicTacToeGame
 			}
 		}
 
-		//check vertically
+		//check horizontally
 		for (size_t i = 0; i < BOARD_SIZE; i += 3)
 		{
 			if (data[i] == data[i + 1] && data[i] == data[i + 2])
@@ -70,5 +70,29 @@ namespace TicTacToeGame
 		}
 
 		return MoveResult::TIE;
+	}
+	std::ostream & operator<<(std::ostream & stream, const Board & board)
+	{
+		stream << ToChar(board.data[0]) << '|' << ToChar(board.data[1]) << '|' << ToChar(board.data[2]) << std::endl;
+		stream << "-----\n";
+		stream << ToChar(board.data[3]) << '|' << ToChar(board.data[4]) << '|' << ToChar(board.data[5]) << std::endl;
+		stream << "-----\n";
+		stream << ToChar(board.data[6]) << '|' << ToChar(board.data[7]) << '|' << ToChar(board.data[8]) << std::endl;
+
+		return stream;
+	}
+	char ToChar(const Field & field)
+	{
+		switch (field)
+		{
+		case Field::EMPTY:
+			return ' ';
+		case Field::X:
+			return 'X';
+		case Field::O:
+			return 'O';
+		default:
+			return '*';
+		}
 	}
 }
