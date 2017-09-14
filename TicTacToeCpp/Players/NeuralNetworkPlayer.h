@@ -9,9 +9,11 @@ namespace TicTacToeGame
 	{
 	public:
 		NeuralNetworkPlayer();
+		NeuralNetworkPlayer(Neural::BasicNeuralNetwork* network);
 		~NeuralNetworkPlayer();
 
 		virtual char MakeMove(const Board& currentBoard) override;
+		void SetNewNeuralNetwork(Neural::BasicNeuralNetwork* network);
 	protected:
 		float* GenerateInputs(const Board& currentBoard);
 		char ProcessOutputs(const float* outputs);

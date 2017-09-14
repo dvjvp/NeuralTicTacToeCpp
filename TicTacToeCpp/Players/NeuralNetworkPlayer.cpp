@@ -31,6 +31,11 @@ namespace TicTacToeGame
 		}
 	}
 
+	NeuralNetworkPlayer::NeuralNetworkPlayer(Neural::BasicNeuralNetwork * network)
+	{
+		this->network = network;
+	}
+
 
 	NeuralNetworkPlayer::~NeuralNetworkPlayer()
 	{
@@ -43,6 +48,12 @@ namespace TicTacToeGame
 		size_t unusedTemp;
 		const float* outputs = network->Compute(inputs, Board::BOARD_SIZE, unusedTemp);
 		return ProcessOutputs(outputs);
+	}
+
+	void NeuralNetworkPlayer::SetNewNeuralNetwork(Neural::BasicNeuralNetwork * network)
+	{
+		delete this->network;
+		this->network = network;
 	}
 
 	float* NeuralNetworkPlayer::GenerateInputs(const Board& currentBoard)
