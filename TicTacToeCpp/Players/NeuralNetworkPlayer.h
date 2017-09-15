@@ -20,6 +20,7 @@ namespace TicTacToeGame
 		inline float FieldToFloat(const Field& field);
 	private:
 		Neural::BasicNeuralNetwork* network;
+		bool dontDeleteNetworkOnDestructor = false;
 	};
 }
 

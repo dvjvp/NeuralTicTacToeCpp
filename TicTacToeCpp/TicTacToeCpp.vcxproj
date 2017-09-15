@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClInclude Include="Game\Board.h" />
     <ClInclude Include="Game\IPlayer.h" />
+    <ClInclude Include="Genetic\GeneticLearning.h" />
     <ClInclude Include="Players\NeuralNetworkPlayer.h" />
     <ClInclude Include="Neural\Layer.h" />
     <ClInclude Include="Neural\NeuralNetwork.h" />
@@ -160,6 +161,7 @@
   <ItemGroup>
     <ClCompile Include="Game\Board.cpp" />
     <ClCompile Include="Game\IPlayer.cpp" />
+    <ClCompile Include="Genetic\GeneticLearning.cpp" />
     <ClCompile Include="Players\NeuralNetworkPlayer.cpp" />
     <ClCompile Include="Players\RandomPlayer.cpp" />
     <ClCompile Include="stdafx.cpp" />

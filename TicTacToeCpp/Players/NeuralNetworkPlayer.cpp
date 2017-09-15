@@ -19,12 +19,16 @@ namespace TicTacToeGame
 	NeuralNetworkPlayer::NeuralNetworkPlayer(Neural::BasicNeuralNetwork * network)
 	{
 		this->network = network;
+		dontDeleteNetworkOnDestructor = true;
 	}
 
 
 	NeuralNetworkPlayer::~NeuralNetworkPlayer()
 	{
-		delete network;
+		if (!dontDeleteNetworkOnDestructor)
+		{
+			delete network;
+		}
 	}
 
 	char NeuralNetworkPlayer::MakeMove(const Board& currentBoard)

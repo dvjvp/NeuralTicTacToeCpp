@@ -14,9 +14,11 @@ namespace Neural
 	class NeuralNetwork
 	{
 	public:
-		NeuralNetwork(size_t* layerSizes, const size_t layerCount);
+		NeuralNetwork();
+		NeuralNetwork(const size_t* layerSizes, const size_t layerCount);
 		~NeuralNetwork();
 
+		void InitializeLayers(const size_t* layerSizes, const size_t layerCount);
 		const T* Compute(T* inputs, const size_t inputsSize, size_t& outputsSize);
 	protected:
 		void ClearInputs();
@@ -26,7 +28,6 @@ namespace Neural
 		size_t layerCount;
 		Layer<T>* layers;
 	};
-
 
 	using BasicNeuralNetwork = NeuralNetwork<float>;
 	using DoublePrecisionNeuralNetwork = NeuralNetwork<double>;
@@ -41,7 +42,23 @@ namespace Neural
 namespace Neural
 {
 	template<typename T>
-	NeuralNetwork<T>::NeuralNetwork(size_t * layerSizes, const size_t layerCount)
+	NeuralNetwork<T>::NeuralNetwork()
+	{
+	}
+	template<typename T>
+	NeuralNetwork<T>::NeuralNetwork(const size_t * layerSizes, const size_t layerCount)
+	{
+		InitializeLayers(layerSizes, layerCount);
+	}
+
+	template<typename T>
+	NeuralNetwork<T>::~NeuralNetwork()
+	{
+		delete[] layers;
+	}
+
+	template<typename T>
+	void Neural::NeuralNetwork<T>::InitializeLayers(const size_t* layerSizes, const size_t layerCount)
 	{
 		if (layerCount <= 0)
 		{
@@ -58,15 +75,7 @@ namespace Neural
 			layers[i].Initialize(thisLayerSize, nextLayerSize);
 		}
 		layers[layerCount - 1].Initialize(layerSizes[layerCount - 1], 0);
-
 	}
-
-	template<typename T>
-	NeuralNetwork<T>::~NeuralNetwork()
-	{
-		delete[] layers;
-	}
-
 
 	template<typename T>
 	const T* NeuralNetwork<T>::Compute(T * inputs, const size_t inputsSize, size_t & outputsSize)

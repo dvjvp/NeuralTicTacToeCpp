@@ -81,6 +81,9 @@
     <ClInclude Include="Neural\NetworkHelpers.h">
       <Filter>Header Files\Neural</Filter>
     </ClInclude>
+    <ClInclude Include="Genetic\GeneticLearning.h">
+      <Filter>Header Files\Genetic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -103,6 +106,9 @@
     </ClCompile>
     <ClCompile Include="Players\NeuralNetworkPlayer.cpp">
       <Filter>Source Files\Players</Filter>
+    </ClCompile>
+    <ClCompile Include="Genetic\GeneticLearning.cpp">
+      <Filter>Source Files\Genetic</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
