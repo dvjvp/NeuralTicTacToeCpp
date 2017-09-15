@@ -13,7 +13,9 @@ using namespace TicTacToeGame;
 
 int main()
 {
-	srand((size_t)time(0));
+	// For neural network helper functions (used by neural network player)
+	// to correctly work, random stream must be first correctly seeded.
+	srand((size_t)time(0));		
 
 	IPlayer* player1 = new RandomPlayer();
 	IPlayer* player2 = new NeuralNetworkPlayer();
@@ -27,9 +29,11 @@ int main()
 		std::cout << game.board << std::endl;
 		getchar();
 	}
+
+
+
 	delete player1;
 	delete player2;
-
 
 	std::cout << "Game finished. ";
 	if (result == MoveResult::TIE)

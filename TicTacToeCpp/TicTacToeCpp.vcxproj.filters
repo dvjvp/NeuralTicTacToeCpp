@@ -37,6 +37,12 @@
     <Filter Include="Source Files\Utility">
       <UniqueIdentifier>{7a0306b4-ad68-4843-ad1c-594c7299b204}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Genetic">
+      <UniqueIdentifier>{559fd699-c98c-48e9-910d-423cfcc81bf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Genetic">
+      <UniqueIdentifier>{e5f03e0e-8bc6-4625-944e-720104d3c049}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
