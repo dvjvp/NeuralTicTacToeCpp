@@ -22,7 +22,7 @@ namespace Genetic
 		delete[] currentGeneration;
 		delete[] scores;
 
-		delete opponentToTestAgainst;
+		//delete opponentToTestAgainst;
 		delete thisPlayer;
 	}
 
@@ -136,7 +136,7 @@ namespace Genetic
 		}
 	}
 
-	int GeneticLearning::GetCurrentGenerationCounter() const
+	size_t GeneticLearning::GetCurrentGenerationCounter() const
 	{
 		return generationCounter;
 	}

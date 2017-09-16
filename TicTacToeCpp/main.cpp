@@ -85,7 +85,7 @@ int main()
 		printScores(networkScores);
 	}
 
-
+	delete opponentToTrainAgainst;
 
 	std::cout << "Program finished.";
 	getchar();
