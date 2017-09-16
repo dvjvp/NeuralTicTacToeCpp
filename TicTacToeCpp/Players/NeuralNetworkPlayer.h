@@ -13,7 +13,7 @@ namespace TicTacToeGame
 		~NeuralNetworkPlayer();
 
 		virtual char MakeMove(const Board& currentBoard) override;
-		void SetNewNeuralNetwork(Neural::BasicNeuralNetwork* network);
+		Neural::BasicNeuralNetwork* SetNewNeuralNetwork(Neural::BasicNeuralNetwork* network);
 	protected:
 		float* GenerateInputs(const Board& currentBoard);
 		char ProcessOutputs(const float* outputs);

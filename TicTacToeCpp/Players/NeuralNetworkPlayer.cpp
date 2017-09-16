@@ -39,10 +39,11 @@ namespace TicTacToeGame
 		return ProcessOutputs(outputs);
 	}
 
-	void NeuralNetworkPlayer::SetNewNeuralNetwork(Neural::BasicNeuralNetwork * network)
+	Neural::BasicNeuralNetwork* NeuralNetworkPlayer::SetNewNeuralNetwork(Neural::BasicNeuralNetwork * network)
 	{
-		delete this->network;
+		Neural::BasicNeuralNetwork* previous = this->network;
 		this->network = network;
+		return previous;
 	}
 
 	float* NeuralNetworkPlayer::GenerateInputs(const Board& currentBoard)

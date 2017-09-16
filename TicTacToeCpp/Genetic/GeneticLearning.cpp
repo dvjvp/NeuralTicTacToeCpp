@@ -1,11 +1,14 @@
+#include <iostream>
 #include "GeneticLearning.h"
 #include "../Game/IPlayer.h"
 #include "../Game/TicTacToe.h"
 #include "../Neural/NetworkHelpers.h"
+#include "../Players/ContinuusPlayer.h"
 #include "../Players/NeuralNetworkPlayer.h"
 #include "../Players/RandomPlayer.h"
 #include "../Utility/Algorithms.h"
 
+//#define DRAW_BOARDS
 
 namespace Genetic
 {
@@ -37,7 +40,7 @@ namespace Genetic
 		scores = new int[populationSize];
 
 		thisPlayer = new TicTacToeGame::NeuralNetworkPlayer(&currentGeneration[0]);
-		opponentToTestAgainst = new TicTacToeGame::RandomPlayer();
+		opponentToTestAgainst = new TicTacToeGame::ContinuusPlayer();
 	}
 
 	void GeneticLearning::NextGeneration()
@@ -53,22 +56,33 @@ namespace Genetic
 			previousGeneration = temp;
 		}
 
+
+		std::vector<int> networkScores(scores, scores + populationSize);
+		std::vector<size_t> sortedFromWorst = sort_indexes(networkScores);
+
+		const size_t individualsThatGetToProcreate = (size_t)(survivalRate * populationSize);
+#define RANDOM_SURVIVOR_INDEX (sortedFromWorst[(rand() % individualsThatGetToProcreate) + populationSize - individualsThatGetToProcreate])
+
 		if (elitism)
 		{
 			//save best individual
-			currentGeneration[0] = previousGeneration[fittestIndividualIndex];
+			currentGeneration[0] = previousGeneration[sortedFromWorst.back()];
 		}
 		const size_t startIndex = elitism ? 1 : 0;
 
 		//procreation for science
 		for (size_t i = startIndex; i < populationSize; i++)
 		{
-			Neural::BasicNeuralNetwork& parent1 = previousGeneration[rand() % populationSize];
-			Neural::BasicNeuralNetwork& parent2 = previousGeneration[rand() % populationSize];
+			const size_t index1 = RANDOM_SURVIVOR_INDEX;
+			const int scoreIndex1 = scores[index1];
+			Neural::BasicNeuralNetwork& parent1 = previousGeneration[index1];
+			const size_t index2 = RANDOM_SURVIVOR_INDEX;
+			const int scoreIndex2 = scores[index2];
+			Neural::BasicNeuralNetwork& parent2 = previousGeneration[index2];
 
 			Crossover(parent1, parent2, &currentGeneration[i]);
 		}
-
+#undef RANDOM_SURVIVOR_INDEX
 		//...with a little bit of fallout
 		MutateCurrentPopulation();
 		++generationCounter;
@@ -86,6 +100,7 @@ namespace Genetic
 		{
 			for (size_t matchNumber = 0; matchNumber < gamesPlayedPerScoring; matchNumber++)
 			{
+				thisPlayer->SetNewNeuralNetwork(&currentGeneration[networkIndex]);
 				const bool playsAsX = (matchNumber & 1) == 0;
 				TicTacToeGame::IPlayer* player1 = playsAsX ? thisPlayer : opponentToTestAgainst;
 				TicTacToeGame::IPlayer* player2 = playsAsX ? opponentToTestAgainst : thisPlayer;
@@ -111,8 +126,16 @@ namespace Genetic
 					{
 						--scores[networkIndex];
 					}
+#ifdef DRAW_BOARDS
+					std::cout << game.board << std::endl;
+#endif // DRAW_BOARDS
+
 				}
 			}
+#ifdef DRAW_BOARDS
+			std::cout << "--------------------" << std::endl;
+#endif // DRAW_BOARDS
+
 		}
 	}
 
@@ -132,6 +155,8 @@ namespace Genetic
 		for (size_t i = 0; i < populationSize; i++)
 		{
 			previousGeneration[i].InitializeLayers(networkLayerSizes, networkLayerCount);
+			Neural::HelperFunctions::RandomizeNeuralNetworkWeights(&previousGeneration[i], -1.0f, 1.0f);
+			Neural::HelperFunctions::RandomizeNeuralNetworkTresholds(&previousGeneration[i], -1.0f, 1.0f);
 		}
 
 		currentGeneration = new Neural::BasicNeuralNetwork[populationSize];

@@ -84,6 +84,9 @@
     <ClInclude Include="Genetic\GeneticLearning.h">
       <Filter>Header Files\Genetic</Filter>
     </ClInclude>
+    <ClInclude Include="Players\ContinuusPlayer.h">
+      <Filter>Header Files\Players</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -109,6 +112,9 @@
     </ClCompile>
     <ClCompile Include="Genetic\GeneticLearning.cpp">
       <Filter>Source Files\Genetic</Filter>
+    </ClCompile>
+    <ClCompile Include="Players\ContinuusPlayer.cpp">
+      <Filter>Source Files\Players</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

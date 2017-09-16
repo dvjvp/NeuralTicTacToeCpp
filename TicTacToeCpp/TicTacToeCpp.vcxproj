@@ -145,6 +145,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Players\ContinuusPlayer.h" />
     <ClInclude Include="Game\Board.h" />
     <ClInclude Include="Game\IPlayer.h" />
     <ClInclude Include="Genetic\GeneticLearning.h" />
@@ -159,6 +160,7 @@
     <ClInclude Include="Neural\NetworkHelpers.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Players\ContinuusPlayer.cpp" />
     <ClCompile Include="Game\Board.cpp" />
     <ClCompile Include="Game\IPlayer.cpp" />
     <ClCompile Include="Genetic\GeneticLearning.cpp" />

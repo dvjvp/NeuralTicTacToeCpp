@@ -59,23 +59,26 @@ int main()
 
 	Genetic::GeneticLearning evolution(layerSizes, 3);
 	evolution.populationSize = 16;
-	evolution.gamesPlayedPerScoring = 30;
-	evolution.mutationRate = 0.025f;
+	evolution.gamesPlayedPerScoring = 15;
+	evolution.survivalRate = 0.50f;
+	evolution.mutationRate = 0.015f;
 	evolution.elitism = true;
 
 	evolution.Initialize();
 
 	do 
 	{
+		system("cls");
+
 		evolution.NextGeneration();
 
 		const int* scores = evolution.GetScores();
 		std::vector<int> networkScores(scores, scores + evolution.populationSize);
 		std::vector<size_t> sortedFromWorst = sort_indexes(networkScores);
 		
-		system("cls");
 		std::cout << "Generation: " << evolution.GetCurrentGenerationCounter() << std::endl;
-		std::cout << "Score from 30 games against random AI (win adds +1 to score, lose -1 and tie 0):" << std::endl << std::endl;
+		std::cout << "Score from "<<evolution.gamesPlayedPerScoring<<" games against random AI (win adds +1 to score, lose -1 and tie 0):" 
+			<< std::endl << std::endl;
 		for (int i = sortedFromWorst.size() - 1; i >= 0 ; --i)
 		{
 			std::cout << scores[sortedFromWorst[i]] << '\t';

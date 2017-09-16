@@ -33,8 +33,9 @@ namespace Genetic
 		class TicTacToeGame::NeuralNetworkPlayer* thisPlayer;
 
 		size_t gamesPlayedPerScoring = 10;
-		size_t populationSize = 8;
+		size_t populationSize = 16;
 		float mutationRate = 0.015f;
+		float survivalRate = 0.50f;
 		bool elitism = true;
 
 	protected:
