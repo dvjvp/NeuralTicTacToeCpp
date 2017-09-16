@@ -40,7 +40,7 @@ namespace Genetic
 		scores = new int[populationSize];
 
 		thisPlayer = new TicTacToeGame::NeuralNetworkPlayer(&currentGeneration[0]);
-		opponentToTestAgainst = new TicTacToeGame::ContinuusPlayer();
+		opponentToTestAgainst = new TicTacToeGame::RandomPlayer();
 	}
 
 	void GeneticLearning::NextGeneration()

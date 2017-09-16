@@ -58,9 +58,9 @@ int main()
 	size_t layerSizes[] = { 9,9,9 };
 
 	Genetic::GeneticLearning evolution(layerSizes, 3);
-	evolution.populationSize = 16;
-	evolution.gamesPlayedPerScoring = 15;
-	evolution.survivalRate = 0.50f;
+	evolution.populationSize = 20;
+	evolution.gamesPlayedPerScoring = 20;
+	evolution.survivalRate = 0.35f;
 	evolution.mutationRate = 0.015f;
 	evolution.elitism = true;
 
