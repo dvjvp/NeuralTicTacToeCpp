@@ -19,20 +19,22 @@ namespace Genetic
 		void Initialize();
 		void NextGeneration();
 		void ScoreGeneration();
+
+		int GetCurrentGenerationCounter() const;
+		const int* GetScores() const;
 	protected:
 		void CreateNetworks();
 		void MutateCurrentPopulation();
 		void Crossover(const Neural::BasicNeuralNetwork& parent1, const Neural::BasicNeuralNetwork& parent2, Neural::BasicNeuralNetwork* child);
 
 	public:
-		const size_t GAMES_PLAYED_PER_SCORING = 10;
 
 		class TicTacToeGame::IPlayer* opponentToTestAgainst;
 		class TicTacToeGame::NeuralNetworkPlayer* thisPlayer;
 
+		size_t gamesPlayedPerScoring = 10;
 		size_t populationSize = 8;
 		float mutationRate = 0.015f;
-		float survivalRate = 0.50f;
 		bool elitism = true;
 
 	protected:

@@ -44,8 +44,6 @@ namespace Genetic
 	{
 		ScoreGeneration();
 
-		std::vector<int> networkScores(scores, scores + populationSize);
-		//std::vector<size_t> sortedFromFittest = sort_indexes(networkScores);
 		size_t fittestIndividualIndex = FindFittestInCurrentGeneration(scores);
 
 		//swap buffer pointers
@@ -86,7 +84,7 @@ namespace Genetic
 
 		for (size_t networkIndex = 0; networkIndex < populationSize; networkIndex++)
 		{
-			for (size_t matchNumber = 0; matchNumber < GAMES_PLAYED_PER_SCORING; matchNumber++)
+			for (size_t matchNumber = 0; matchNumber < gamesPlayedPerScoring; matchNumber++)
 			{
 				const bool playsAsX = (matchNumber & 1) == 0;
 				TicTacToeGame::IPlayer* player1 = playsAsX ? thisPlayer : opponentToTestAgainst;
@@ -116,6 +114,16 @@ namespace Genetic
 				}
 			}
 		}
+	}
+
+	int GeneticLearning::GetCurrentGenerationCounter() const
+	{
+		return generationCounter;
+	}
+
+	const int* GeneticLearning::GetScores() const
+	{
+		return scores;
 	}
 
 	void GeneticLearning::CreateNetworks()
