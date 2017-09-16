@@ -9,24 +9,90 @@
 
 namespace Neural
 {
-
+	/*
+	* @brief Neural network
+	*
+	* 
+	*/
 	template<typename T>
 	class NeuralNetwork
 	{
 	public:
+		/**
+		* @brief Empty constructor
+		* 
+		* Does nothing. Is used when instantiating an array of NeuralNetworks. Requires
+		* @see InitializeLayers() to be called manually right after c-tor to work correctly
+		*/
 		NeuralNetwork();
+		/**
+		* @brief Constructor you can use for quick network creation
+		*
+		* Automatically calls InitializeLayers().
+		*
+		* @param layerSizes - number of neurons in each layer
+		* @param layerCount - size of array @p layerSizes. Also number of total layers in this network
+		*/
 		NeuralNetwork(const size_t* layerSizes, const size_t layerCount);
+		/**
+		* @brief Destructor
+		* 
+		* Frees buffers initialized by InitializeLayers() method
+		*/
 		~NeuralNetwork();
+		/**
+		* @brief Copies data between two networks with the same layerCount and layerSizes
+		* 
+		* Performs memcpy() on each buffer of each layer from @p other to this network
+		*
+		* @param other - other NeuralNetwork to copy neurons' data from
+		* @return this (fluent interface)
+		*/
 		NeuralNetwork& operator=(const NeuralNetwork& other);
 
+		/**
+		* @brief Second part of the constructor. Allocates buffer for layers and initializes them
+		* 
+		* Automatically called when using 2-parameters c-tor:
+		* @see NeuralNetwork(const size_t* layerSizes, const size_t layerCount)
+		* @param layerSizes - number of neurons in each layer
+		* @param layerCount - size of array @p layerSizes. Also number of total layers in this network
+		*/
 		void InitializeLayers(const size_t* layerSizes, const size_t layerCount);
-		const T* Compute(T* inputs, const size_t inputsSize, size_t& outputsSize);
+		/**
+		* @brief Runs neural network computations and returns values from output layer
+		* 
+		* Value returned is the actual buffer for data stored in the last layer, so
+		* don't try to delete it or free it or something, it needs to exist until the end
+		* of the neural network lifespan and then it's destructor will delete it for you anyway.
+		* That's why it's const too - so you don't mess with it too much.
+		*
+		* @param inputs - inputs for computation
+		* @param inputsSize - size of the inputs array
+		* @param outputsSize - (output parameter) size of the output. In case you forgot.
+		* @return values after processing by neural network
+		*/
+		const T* Compute(const T* inputs, const size_t inputsSize, size_t& outputsSize);
 	protected:
+		/**
+		* @brief Clears values stored in each neuron
+		* 
+		* Set's all inputs' buffers' values to 0.
+		*/
 		void ClearInputs();
-		inline void SetFirstLayerInputs(T* inputs);
+		/**
+		* @brief Copies data to first layer inputs, making it input for the whole network
+		* 
+		* Copies data to first layer input buffer
+		* @param inputs - data to copy
+		*/
+		inline void SetFirstLayerInputs(const T* inputs);
 
 	public:
+		//Number of layers in this network
 		size_t layerCount;
+		//Array of layers of which this neural network is composed
+		//This array size is @see layerCount
 		Layer<T>* layers = nullptr;
 	};
 
@@ -94,7 +160,7 @@ namespace Neural
 	}
 
 	template<typename T>
-	const T* NeuralNetwork<T>::Compute(T * inputs, const size_t inputsSize, size_t & outputsSize)
+	const T* NeuralNetwork<T>::Compute(const T * inputs, const size_t inputsSize, size_t & outputsSize)
 	{
 		//assertion
 		if (inputsSize != layers[0].thisLayerSize)
@@ -141,12 +207,9 @@ namespace Neural
 		}
 	}
 	template<typename T>
-	inline void NeuralNetwork<T>::SetFirstLayerInputs(T * inputs)
+	inline void NeuralNetwork<T>::SetFirstLayerInputs(const T * inputs)
 	{
-		for (size_t i = 0; i < layers[0].thisLayerSize; i++)
-		{
-			layers[0].inputs[i] = inputs[i];
-		}
+		memcpy(layers[0].inputs, inputs, layers[0].thisLayerSize);
 	}
 }
 
