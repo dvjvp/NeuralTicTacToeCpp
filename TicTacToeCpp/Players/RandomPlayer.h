@@ -3,6 +3,10 @@
 
 namespace TicTacToeGame
 {
+	/*
+	* AI Player for TicTacToe that uses random moves throughout the whole game
+	*
+	*/
 	class RandomPlayer : public IPlayer
 	{
 	public:

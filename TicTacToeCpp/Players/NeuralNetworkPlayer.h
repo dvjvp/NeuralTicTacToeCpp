@@ -4,7 +4,9 @@
 
 namespace TicTacToeGame
 {
-
+	/*
+	* Player for TicTacToe that uses Neural Network to calculate his moves
+	*/
 	class NeuralNetworkPlayer : public IPlayer
 	{
 	public:

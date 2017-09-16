@@ -3,6 +3,15 @@
 #include <numeric>
 #include <vector>
 
+/**
+* @brief Sorts an array and returns array of indexes for sorted version
+* 
+* Copied from StackOverflow, lol
+* Source:
+* https://stackoverflow.com/questions/1577475/c-sorting-and-keeping-track-of-indexes
+* @param Array to sort
+* @return Array of indexes representing sorted values from original array
+*/
 template <typename T>
 std::vector<size_t> sort_indexes(const std::vector<T> &v) {
 
