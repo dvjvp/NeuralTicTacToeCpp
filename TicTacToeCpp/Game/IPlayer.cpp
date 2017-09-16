@@ -1,5 +1,6 @@
 #include "IPlayer.h"
 #include "TicTacToe.h"
+#include "Board.h"
 
 
 namespace TicTacToeGame
