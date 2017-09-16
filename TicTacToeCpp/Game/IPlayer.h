@@ -1,9 +1,8 @@
 #pragma once
+#include "Board.h"
 
 namespace TicTacToeGame
 {
-	enum class Field;	//just a predeclaration to avoid having unnecessary .h files in headers
-	class Board;		//same as above
 
 	/**
 	* Interface for TicTacToe players to derive from.
