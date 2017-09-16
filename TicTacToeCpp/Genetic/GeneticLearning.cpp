@@ -1,11 +1,8 @@
 #include <iostream>
 #include "GeneticLearning.h"
-#include "../Game/IPlayer.h"
 #include "../Game/TicTacToe.h"
 #include "../Neural/NetworkHelpers.h"
-#include "../Players/ContinuusPlayer.h"
 #include "../Players/NeuralNetworkPlayer.h"
-#include "../Players/RandomPlayer.h"
 #include "../Utility/Algorithms.h"
 
 //#define DRAW_BOARDS
@@ -29,7 +26,7 @@ namespace Genetic
 		delete thisPlayer;
 	}
 
-	void GeneticLearning::Initialize()
+	void GeneticLearning::Initialize(TicTacToeGame::IPlayer* opponentToTestAgainst)
 	{
 		if (populationSize <= 3)
 		{
@@ -40,7 +37,7 @@ namespace Genetic
 		scores = new int[populationSize];
 
 		thisPlayer = new TicTacToeGame::NeuralNetworkPlayer(&currentGeneration[0]);
-		opponentToTestAgainst = new TicTacToeGame::RandomPlayer();
+		this->opponentToTestAgainst = opponentToTestAgainst;
 	}
 
 	void GeneticLearning::NextGeneration()

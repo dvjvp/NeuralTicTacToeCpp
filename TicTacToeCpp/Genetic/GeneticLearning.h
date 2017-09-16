@@ -3,20 +3,25 @@
 
 namespace TicTacToeGame
 {
-	class IPlayer;
-	class NeuralNetworkPlayer;
+	class IPlayer;				//just some predefinition, so i don't have to include header here. 
+								//Less headers included in .h files, the better, right?
+	class NeuralNetworkPlayer;	//same thing as above
 }
 
 namespace Genetic
 {
-
+	/**
+	* @brief Class handling process of teaching neural networks via trial-and-error method, that is evolution
+	*
+	* Handles some things
+	*/
 	class GeneticLearning
 	{
 	public:
 		GeneticLearning(const size_t* networkLayerSizes, const size_t networkLayerCount);
 		~GeneticLearning();
 
-		void Initialize();
+		void Initialize(TicTacToeGame::IPlayer* opponentToTestAgainst);
 		void NextGeneration();
 		void ScoreGeneration();
 
