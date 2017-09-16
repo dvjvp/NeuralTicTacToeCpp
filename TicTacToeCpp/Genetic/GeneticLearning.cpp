@@ -1,9 +1,10 @@
 #include "GeneticLearning.h"
-#include "../Neural/NetworkHelpers.h"
 #include "../Game/IPlayer.h"
+#include "../Game/TicTacToe.h"
+#include "../Neural/NetworkHelpers.h"
 #include "../Players/NeuralNetworkPlayer.h"
 #include "../Players/RandomPlayer.h"
-#include "../Game/TicTacToe.h"
+#include "../Utility/Algorithms.h"
 
 
 namespace Genetic
@@ -17,7 +18,8 @@ namespace Genetic
 
 	GeneticLearning::~GeneticLearning()
 	{
-		delete[] networks;
+		delete[] previousGeneration;
+		delete[] currentGeneration;
 		delete[] scores;
 
 		delete opponentToTestAgainst;
@@ -26,10 +28,15 @@ namespace Genetic
 
 	void GeneticLearning::Initialize()
 	{
+		if (populationSize <= 3)
+		{
+			throw std::exception("Population size invalid. Algorithm can't work with that.");
+		}
+
 		CreateNetworks();
 		scores = new int[populationSize];
 
-		thisPlayer = new TicTacToeGame::NeuralNetworkPlayer(&networks[0]);
+		thisPlayer = new TicTacToeGame::NeuralNetworkPlayer(&currentGeneration[0]);
 		opponentToTestAgainst = new TicTacToeGame::RandomPlayer();
 	}
 
@@ -37,8 +44,34 @@ namespace Genetic
 	{
 		ScoreGeneration();
 
-		//TODO: Crossing and survival of the fittest
+		std::vector<int> networkScores(scores, scores + populationSize);
+		//std::vector<size_t> sortedFromFittest = sort_indexes(networkScores);
+		size_t fittestIndividualIndex = FindFittestInCurrentGeneration(scores);
 
+		//swap buffer pointers
+		{
+			Neural::BasicNeuralNetwork* temp = currentGeneration;
+			currentGeneration = previousGeneration;
+			previousGeneration = temp;
+		}
+
+		if (elitism)
+		{
+			//save best individual
+			currentGeneration[0] = previousGeneration[fittestIndividualIndex];
+		}
+		const size_t startIndex = elitism ? 1 : 0;
+
+		//procreation for science
+		for (size_t i = startIndex; i < populationSize; i++)
+		{
+			Neural::BasicNeuralNetwork& parent1 = previousGeneration[rand() % populationSize];
+			Neural::BasicNeuralNetwork& parent2 = previousGeneration[rand() % populationSize];
+
+			Crossover(parent1, parent2, &currentGeneration[i]);
+		}
+
+		//...with a little bit of fallout
 		MutateCurrentPopulation();
 		++generationCounter;
 	}
@@ -55,7 +88,7 @@ namespace Genetic
 		{
 			for (size_t matchNumber = 0; matchNumber < GAMES_PLAYED_PER_SCORING; matchNumber++)
 			{
-				const bool playsAsX = matchNumber % 2;
+				const bool playsAsX = (matchNumber & 1) == 0;
 				TicTacToeGame::IPlayer* player1 = playsAsX ? thisPlayer : opponentToTestAgainst;
 				TicTacToeGame::IPlayer* player2 = playsAsX ? opponentToTestAgainst : thisPlayer;
 
@@ -87,12 +120,18 @@ namespace Genetic
 
 	void GeneticLearning::CreateNetworks()
 	{
-		networks = new Neural::BasicNeuralNetwork[populationSize];
+		previousGeneration = new Neural::BasicNeuralNetwork[populationSize];
 		for (size_t i = 0; i < populationSize; i++)
 		{
-			networks->InitializeLayers(networkLayerSizes, networkLayerCount);
-			Neural::HelperFunctions::RandomizeNeuralNetworkWeights(&networks[i], -1.0f, 1.0f);
-			Neural::HelperFunctions::RandomizeNeuralNetworkTresholds(&networks[i], -1.0f, 1.0f);
+			previousGeneration[i].InitializeLayers(networkLayerSizes, networkLayerCount);
+		}
+
+		currentGeneration = new Neural::BasicNeuralNetwork[populationSize];
+		for (size_t i = 0; i < populationSize; i++)
+		{
+			currentGeneration[i].InitializeLayers(networkLayerSizes, networkLayerCount);
+			Neural::HelperFunctions::RandomizeNeuralNetworkWeights(&currentGeneration[i], -1.0f, 1.0f);
+			Neural::HelperFunctions::RandomizeNeuralNetworkTresholds(&currentGeneration[i], -1.0f, 1.0f);
 		}
 	}
 
@@ -100,9 +139,30 @@ namespace Genetic
 	{
 		for (size_t networkIndex = 0; networkIndex < populationSize; networkIndex++)
 		{
-			Neural::BasicNeuralNetwork& thisNetwork = networks[networkIndex];
+			Neural::BasicNeuralNetwork& thisNetwork = currentGeneration[networkIndex];
 
+			for (size_t layerIndex = 0; layerIndex < networkLayerCount; layerIndex++)
+			{
+				Neural::Layer<float>& thisLayer = thisNetwork.layers[layerIndex];
 
+				const size_t weightsCount = thisLayer.thisLayerSize * thisLayer.nextLayerSize;
+				for (size_t weightIndex = 0; weightIndex < weightsCount; weightIndex++)
+				{
+					if (Neural::HelperFunctions::Random(1.0f) < mutationRate)
+					{
+						thisLayer.weights[weightIndex] = Neural::HelperFunctions::Random(2.0f) - 1.0f;
+					}
+				}
+
+				const size_t tresholdsCount = thisLayer.thisLayerSize;
+				for (size_t tresholdIndex = 0; tresholdIndex < tresholdsCount; tresholdIndex++)
+				{
+					if (Neural::HelperFunctions::Random(1.0f) < mutationRate)
+					{
+						thisLayer.tresholds[tresholdIndex] = Neural::HelperFunctions::Random(2.0f) - 1.0f;
+					}
+				}
+			}
 		}
 	}
 
@@ -128,6 +188,23 @@ namespace Genetic
 				thisLayer.tresholds[tresholdIndex] = (from1stParent ? parent1 : parent2).layers[layerIndex].tresholds[tresholdIndex];
 			}
 		}
+	}
+
+	size_t GeneticLearning::FindFittestInCurrentGeneration(int*& scores)
+	{
+		int bestScore = INT_MIN;
+		size_t bestIndividual = 0;
+
+		for (size_t i = 0; i < populationSize; i++)
+		{
+			if (bestScore < scores[i])
+			{
+				bestScore = scores[i];
+				bestIndividual = i;
+			}
+		}
+
+		return bestIndividual;
 	}
 
 }

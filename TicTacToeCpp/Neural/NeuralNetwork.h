@@ -17,6 +17,7 @@ namespace Neural
 		NeuralNetwork();
 		NeuralNetwork(const size_t* layerSizes, const size_t layerCount);
 		~NeuralNetwork();
+		NeuralNetwork& operator=(const NeuralNetwork& other);
 
 		void InitializeLayers(const size_t* layerSizes, const size_t layerCount);
 		const T* Compute(T* inputs, const size_t inputsSize, size_t& outputsSize);
@@ -26,7 +27,7 @@ namespace Neural
 
 	public:
 		size_t layerCount;
-		Layer<T>* layers;
+		Layer<T>* layers = nullptr;
 	};
 
 	using BasicNeuralNetwork = NeuralNetwork<float>;
@@ -55,6 +56,21 @@ namespace Neural
 	NeuralNetwork<T>::~NeuralNetwork()
 	{
 		delete[] layers;
+	}
+
+	template<typename T>
+	NeuralNetwork<T> & NeuralNetwork<T>::operator=(const NeuralNetwork<T>& other)
+	{
+		for (size_t i = 0; i < layerCount; ++i)
+		{
+			const size_t weightsBufferSize = layers[i].thisLayerSize * layers[i].nextLayerSize;
+			memcpy(layers[i].weights, other.layers[i].weights, sizeof(T)*weightsBufferSize);
+
+			const size_t tresholdsBufferSize = layers[i].thisLayerSize;
+			memcpy(layers[i].tresholds, other.layers[i].tresholds, sizeof(T)*tresholdsBufferSize);
+		}
+
+		return *this;
 	}
 
 	template<typename T>

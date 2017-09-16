@@ -1,6 +1,12 @@
 #pragma once
 #include "../Neural/NeuralNetwork.h"
 
+namespace TicTacToeGame
+{
+	class IPlayer;
+	class NeuralNetworkPlayer;
+}
+
 namespace Genetic
 {
 
@@ -35,8 +41,12 @@ namespace Genetic
 		
 		size_t generationCounter = 0;
 
-		Neural::BasicNeuralNetwork* networks;
+		Neural::BasicNeuralNetwork* currentGeneration;
+		Neural::BasicNeuralNetwork* previousGeneration;
+		
 		int* scores;
+	private:
+		size_t FindFittestInCurrentGeneration(int*& scores);
 	};
 
 }
