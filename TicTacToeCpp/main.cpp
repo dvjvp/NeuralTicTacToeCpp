@@ -30,7 +30,7 @@ float mean(const std::vector<int>& numbers);
  */
 void printScores(std::vector<int>& scores);
 
-#define PRINT_MESSAGE(MESSAGE) std::cout << MESSAGE; getchar()
+#define PRINT_MESSAGE(MESSAGE) std::cout << MESSAGE << std::endl; getchar()
 
 /**
  @brief Entry point of application
@@ -74,7 +74,7 @@ int main()
 		
 		printScores(networkScores);
 
-		getchar();
+		//getchar();
 		system("cls");
 
 	} while (evolution.GetCurrentGenerationCounter() < 40);
@@ -126,9 +126,13 @@ int main()
 			std::cout << ("You tied with AI, when it was going first");
 			break;
 		}
+
+		std::cout << std::endl << game.board << std::endl;
 	}
 	
 	PRINT_MESSAGE("Preparing second game...");
+	getchar();
+	system("cls");
 	result = TicTacToeGame::MoveResult::GAME_CONTINUES;
 	{
 		TicTacToeGame::TicTacToe game(&humanPlayer, &networkPlayer);
@@ -148,6 +152,8 @@ int main()
 			std::cout << ("You tied with AI, when going first");
 			break;
 		}
+
+		std::cout << std::endl << game.board << std::endl;
 	}
 
 

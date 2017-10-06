@@ -28,17 +28,18 @@ namespace TicTacToeGame
 				std::cin >> result;
 				if (result < '0' || result > '8')
 				{
-					std::cout << "That's not valid input.";
+					std::cout << "That's not valid input." << std::endl;
 				}
 				else
 				{
 					break;
 				}
 			}
+			result -= '0';	//convert from ASCII number to actual number
 
 			if (!IsMoveValid(result))
 			{
-				std::cout << "Move invalid.";
+				std::cout << "Move invalid." << std::endl;
 			}
 			else
 			{
