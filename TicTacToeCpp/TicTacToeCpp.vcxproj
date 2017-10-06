@@ -142,6 +142,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Players\HumanPlayer.h" />
     <ClInclude Include="Players\ContinuusPlayer.h" />
     <ClInclude Include="Game\Board.h" />
     <ClInclude Include="Game\IPlayer.h" />
@@ -157,6 +158,7 @@
     <ClInclude Include="Neural\NetworkHelpers.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Players\HumanPlayer.cpp" />
     <ClCompile Include="Players\ContinuusPlayer.cpp" />
     <ClCompile Include="Game\Board.cpp" />
     <ClCompile Include="Game\IPlayer.cpp" />

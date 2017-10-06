@@ -84,6 +84,9 @@
     <ClInclude Include="Players\ContinuusPlayer.h">
       <Filter>Header Files\Players</Filter>
     </ClInclude>
+    <ClInclude Include="Players\HumanPlayer.h">
+      <Filter>Header Files\Players</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -111,6 +114,9 @@
       <Filter>Source Files\Genetic</Filter>
     </ClCompile>
     <ClCompile Include="Players\ContinuusPlayer.cpp">
+      <Filter>Source Files\Players</Filter>
+    </ClCompile>
+    <ClCompile Include="Players\HumanPlayer.cpp">
       <Filter>Source Files\Players</Filter>
     </ClCompile>
   </ItemGroup>

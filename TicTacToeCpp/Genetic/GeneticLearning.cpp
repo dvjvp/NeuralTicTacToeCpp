@@ -146,6 +146,11 @@ namespace Genetic
 		return scores;
 	}
 
+	Neural::BasicNeuralNetwork& GeneticLearning::GetBest()
+	{
+		return currentGeneration[FindFittestInCurrentGeneration(scores)];
+	}
+
 	void GeneticLearning::CreateNetworks()
 	{
 		previousGeneration = new Neural::BasicNeuralNetwork[populationSize];

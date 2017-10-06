@@ -81,6 +81,8 @@ namespace Genetic
 		* @return Scores from last ScoreGeneration() (most likely data for previous generation)
 		*/
 		const int* GetScores() const;
+
+		Neural::BasicNeuralNetwork& GetBest();
 	protected:
 		void CreateNetworks();
 

@@ -1,4 +1,5 @@
 #pragma once
+#include <fstream>
 #include "NeuralNetwork.h"
 
 namespace Neural
@@ -70,4 +71,118 @@ namespace Neural
 		}
 	}
 	
+	namespace Files
+	{
+		template<typename T>
+		NeuralNetwork<T>* LoadNetworkFromStream(std::istream& stream)
+		{
+			// Load network size
+			size_t layersCount;
+			stream >> layersCount;
+			size_t* layersSizes = new size_t[layersCount];
+			for (size_t i = 0; i < layersCount; i++)
+			{
+				stream >> layersSizes[i];
+			}
+
+			//Create network
+			NeuralNetwork<T>* network = new NeuralNetwork<T>(layersSizes, layersCount);
+
+			//Load neuron data
+			for (size_t i = 0; i < layersCount; i++)
+			{
+				Layer<T>& thisLayer = network->layers[i];
+				for (size_t j = 0; j < thisLayer.thisLayerSize; j++)
+				{
+					stream >> thisLayer.tresholds[j];
+				}
+				for (size_t j = 0; j < thisLayer.thisLayerSize*thisLayer.nextLayerSize; j++)
+				{
+					stream >> thisLayer.weights[j];
+				}
+			}
+
+			delete layersSizes;
+			return network;
+		}
+
+		template<typename T>
+		NeuralNetwork<T>* LoadNetworkFromFile(const char* filepath)
+		{
+			std::ifstream file(filepath, std::ios::in
+#ifdef NETWORKS_SAVED_AS_BINARY
+				| std::ios::binary
+#endif // NETWORKS_SAVED_AS_BINARY
+			);
+
+			return LoadNetworkFromStream<T>(file);
+		}
+
+		
+
+		template<typename T>
+		void SaveNetworkToFile(NeuralNetwork<T>* network, const char* filepath)
+		{
+			/* Create/Open file */
+
+			std::ofstream file(filepath, std::ios::out | std::ios::trunc
+#ifdef NETWORKS_SAVED_AS_BINARY
+				| std::ios::binary
+#endif // NETWORKS_SAVED_AS_BINARY
+			);
+			
+
+			/* Definitions according to save mode */
+
+#ifdef NETWORKS_SAVED_AS_BINARY
+#define NEW_LINE
+#define SPACE
+#else
+#define NEW_LINE file << std::endl;
+#define SPACE file << ' ';
+#endif // NETWORKS_SAVED_AS_BINARY
+
+
+			/* Save network sizes */
+
+			file << network->layerCount;
+			NEW_LINE
+			for (size_t i = 0; i < network->layerCount - 1; i++)
+			{
+				file << network->layers[i].thisLayerSize;
+				SPACE
+			}
+			file << network->layers[network->layerCount - 1].thisLayerSize;
+			NEW_LINE
+			NEW_LINE
+
+			/* Save network data */
+
+			for (size_t i = 0; i < network->layerCount; i++)
+			{
+				Layer<T>& thisLayer = network->layers[i];
+				for (size_t j = 0; j < thisLayer.thisLayerSize; j++)
+				{
+					file << thisLayer.tresholds[j];
+					SPACE
+				}
+				NEW_LINE
+				for (size_t j = 0; j < thisLayer.thisLayerSize*thisLayer.nextLayerSize; j++)
+				{
+					file << thisLayer.weights[j];
+					SPACE
+				}
+
+				NEW_LINE
+				NEW_LINE
+			}
+
+
+			/* Undefine stuff */
+
+#undef NEW_LINE
+#undef SPACE
+
+		}
+	}
 }

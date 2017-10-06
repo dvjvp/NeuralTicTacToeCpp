@@ -3,8 +3,10 @@
 #include <time.h>
 #include "Game/TicTacToe.h"
 #include "Genetic/GeneticLearning.h"
+#include "Neural/NetworkHelpers.h"
 #include "Neural/NeuralNetwork.h"
 #include "Players/ContinuusPlayer.h"
+#include "Players/HumanPlayer.h"
 #include "Players/NeuralNetworkPlayer.h"
 #include "Players/RandomPlayer.h"
 #include "Utility/Algorithms.h"
@@ -28,6 +30,7 @@ float mean(const std::vector<int>& numbers);
  */
 void printScores(std::vector<int>& scores);
 
+#define PRINT_MESSAGE(MESSAGE) std::cout << MESSAGE; getchar()
 
 /**
  @brief Entry point of application
@@ -85,10 +88,71 @@ int main()
 		printScores(networkScores);
 	}
 
-	delete opponentToTrainAgainst;
 
-	std::cout << "Program finished.";
-	getchar();
+	// Now let's play against our trained AI!
+	// But let's save first, so we can restore it in the future without further training
+
+
+	PRINT_MESSAGE("Program finished. Trying to save...");
+	const char* filepath = "myBestNeuralNetwork.nn";
+
+	Neural::BasicNeuralNetwork& network0 = evolution.GetBest();
+	Neural::Files::SaveNetworkToFile(&network0, filepath);
+
+	PRINT_MESSAGE("Success! Trying to load...");
+	Neural::BasicNeuralNetwork* network1 = Neural::Files::LoadNetworkFromFile<float>(filepath);
+
+	PRINT_MESSAGE("Success! Starting game...");
+	TicTacToeGame::NeuralNetworkPlayer networkPlayer(network1);
+	TicTacToeGame::HumanPlayer humanPlayer;
+	TicTacToeGame::MoveResult result = TicTacToeGame::MoveResult::GAME_CONTINUES;
+
+	{
+		TicTacToeGame::TicTacToe game(&networkPlayer, &humanPlayer);
+
+		while (result == TicTacToeGame::MoveResult::GAME_CONTINUES)
+		{
+			result = game.Update();
+		}
+		switch (result)
+		{
+		case TicTacToeGame::MoveResult::X_WON:
+			std::cout << ("You lost to AI, when it was going first");
+			break;
+		case TicTacToeGame::MoveResult::O_WON:
+			std::cout << ("You won with AI, when it was going first");
+			break;
+		case TicTacToeGame::MoveResult::TIE:
+			std::cout << ("You tied with AI, when it was going first");
+			break;
+		}
+	}
+	
+	PRINT_MESSAGE("Preparing second game...");
+	result = TicTacToeGame::MoveResult::GAME_CONTINUES;
+	{
+		TicTacToeGame::TicTacToe game(&humanPlayer, &networkPlayer);
+		while (result == TicTacToeGame::MoveResult::GAME_CONTINUES)
+		{
+			result = game.Update();
+		}
+		switch (result)
+		{
+		case TicTacToeGame::MoveResult::X_WON:
+			std::cout << ("You won with AI, when going first");
+			break;
+		case TicTacToeGame::MoveResult::O_WON:
+			std::cout << ("You lost to AI, when going first");
+			break;
+		case TicTacToeGame::MoveResult::TIE:
+			std::cout << ("You tied with AI, when going first");
+			break;
+		}
+	}
+
+
+	delete opponentToTrainAgainst;
+	delete network1;
     return EXIT_SUCCESS;
 }
 
