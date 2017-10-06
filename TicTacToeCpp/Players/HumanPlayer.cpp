@@ -17,7 +17,7 @@ namespace TicTacToeGame
 	{
 		std::cout << currentBoard;
 		std::cout << std::endl;
-		std::cout << "Select a number 0-8 to place your " << ToChar(GetColor()) << ".\n\n";
+		std::cout << "Select a number 1-9 to place your " << ToChar(GetColor()) << ".\n\n";
 
 		char result = '\0';
 		while (true)
@@ -26,7 +26,7 @@ namespace TicTacToeGame
 			{
 				std::cout << ">>";
 				std::cin >> result;
-				if (result < '0' || result > '8')
+				if (result < '1' || result > '9')
 				{
 					std::cout << "That's not valid input." << std::endl;
 				}
@@ -35,7 +35,7 @@ namespace TicTacToeGame
 					break;
 				}
 			}
-			result -= '0';	//convert from ASCII number to actual number
+			result -= '1';	//convert from ASCII number to actual number
 
 			if (!IsMoveValid(result))
 			{

@@ -110,18 +110,22 @@ namespace Genetic
 					result = game.Update();
 				}
 
-				if (result == TicTacToeGame::MoveResult::O_WON || result == TicTacToeGame::MoveResult::X_WON)
+				if (result == TicTacToeGame::MoveResult::TIE)
+				{
+					scores[networkIndex] += 1;
+				}
+				else if (result == TicTacToeGame::MoveResult::O_WON || result == TicTacToeGame::MoveResult::X_WON)
 				{
 					const bool xWon = result == TicTacToeGame::MoveResult::X_WON;
 					const bool networkWon = xWon == playsAsX;
 					
 					if (networkWon)
 					{
-						++scores[networkIndex];
+						scores[networkIndex] += 5;
 					}
 					else
 					{
-						--scores[networkIndex];
+						--scores[networkIndex] -= 10;
 					}
 #ifdef DRAW_BOARDS
 					std::cout << game.board << std::endl;

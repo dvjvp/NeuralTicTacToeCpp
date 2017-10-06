@@ -70,7 +70,7 @@ int main()
 		//display current data
 		std::cout << "Generation: " << evolution.GetCurrentGenerationCounter() << std::endl;
 		std::cout << "Score from " << evolution.gamesPlayedPerScoring <<
-			" games against random AI (win adds +1 to score, lose -1 and tie 0):" << std::endl << std::endl;
+			" games against random AI (win adds +5 to score, lose -10 and tie +1):" << std::endl << std::endl;
 		
 		printScores(networkScores);
 
@@ -89,9 +89,9 @@ int main()
 	}
 
 
+
 	// Now let's play against our trained AI!
 	// But let's save first, so we can restore it in the future without further training
-
 
 	PRINT_MESSAGE("Program finished. Trying to save...");
 	const char* filepath = "myBestNeuralNetwork.nn";
@@ -156,6 +156,8 @@ int main()
 		std::cout << std::endl << game.board << std::endl;
 	}
 
+	PRINT_MESSAGE("End of the simulation.");
+	getchar();
 
 	delete opponentToTrainAgainst;
 	delete network1;

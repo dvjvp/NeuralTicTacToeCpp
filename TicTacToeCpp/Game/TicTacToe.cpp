@@ -13,6 +13,8 @@ namespace TicTacToeGame
 		playerO->currentGame = this;
 		playerX->color = Field::X;
 		playerO->color = Field::O;
+
+		turn = Field::X;
 	}
 
 	TicTacToe::~TicTacToe()
@@ -49,6 +51,6 @@ namespace TicTacToeGame
 	}
 	inline IPlayer * TicTacToe::GetCurrentPlayer()
 	{
-		return turn == Field::X ? playerO : playerX;
+		return turn == Field::X ? playerX : playerO;
 	}
 }
